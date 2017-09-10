@@ -1,0 +1,8 @@
+typeset -U path
+path=(~/bin /usr/local/bin $path)
+
+# Map caps lock to escape
+if which xcape &> /dev/null; then
+  pkill xcape
+  xcape -e 'Caps_Lock=Escape'
+fi

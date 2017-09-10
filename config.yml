@@ -1,0 +1,14 @@
+packages:
+  exa
+  vivaldi
+  ansible
+  vagrant
+  vagrant-libvirt
+  caddy
+dotfiles:
+  alacritty.yml
+  ansible.cfg
+  tmux.conf
+  vimrc
+  zprofile
+  zshrc

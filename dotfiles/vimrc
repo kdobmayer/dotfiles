@@ -1,0 +1,254 @@
+" Plugins
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/bundle')
+Plug 'tpope/vim-fugitive'
+Plug 'itchyny/lightline.vim'
+Plug 'morhetz/gruvbox'
+call plug#end()
+
+" Basic settings
+set nocompatible                " enables Vim specific features
+filetype plugin on              " enable filetype detection
+set autoread                    " read again the file if changed from outside
+" set autowrite                   " save when using next, !, etc.
+set backspace=eol,start,indent  " configure backspace so it acts as it should act
+
+" Indentation and tabs
+filetype indent on
+set autoindent                  " copy indent from current to new line
+set smartindent                 " auto indent after '{', before '}', etc. 
+set expandtab                   " in insert mode use spaces to insert a tab
+set smarttab                    " use 'swiftwidth', 'tabstop' values in from of a line 
+set shiftwidth=2                " number of spaces to use for (auto)indentation
+set tabstop=2                   " number of spaces that a <Tab> counts
+
+" Search
+set ignorecase                  " ignore case when searching
+set smartcase                   " when searching try to be smart about cases e
+set nohlsearch                  " disable highlighting search results
+set incsearch                   " show search results as type
+set magic                       " use regular expressions when search
+
+" Performance
+set lazyredraw                  " screen will not be redrawn while executing macros 
+set ttyfast                     " indicates a fast terminal connection.  
+set ttyscroll=3                 " speed up scrolling
+set timeoutlen=1000 
+set ttimeoutlen=10
+
+" Text rendering
+set encoding=utf8               " character encoding used inside Vim 
+set fileformats=unix            " end-of-line format
+set textwidth=82                " maximum width of text
+set wrap                        " lines longer than width will wrap
+set whichwrap+=h,l              " move to the next line after the end of the line 
+set linebreak                   " wrap long lines at a character in 'breakat'
+set scrolloff=5                 " minimal lines above and below the cursor.
+" set number                      " show absolute line numbers
+set relativenumber              " show relative line numbers
+" augroup numbertoggle
+"   autocmd!
+"   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+"   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+" augroup END
+" set foldcolumn=1                " add a bit extra margin to the left
+
+" User interface
+set laststatus=2                " last window always has a status line
+set noshowmode                  " don't show status mode, disabled for lightline 
+set ruler                       " always show current position
+set wildmenu                    " turn on the WiLd menu
+set cmdheight=1                 " height of the command bar
+set mouse=a
+if has('clipboard')
+  set clipboard=unnamed,unnamedplus
+endif
+let loaded_matchparen = 1       " disable parenthesis highlighting
+set noshowmatch                 " do not jump to the matching bracket when inserted
+
+" Windows and tabs
+set hidden                      " a buffer becomes hidden when abandoned
+set splitright                  " vertical windows should be split to right
+set splitbelow                  " horizontal windows should split to bottom
+set showtabline=1               " always display the tab pages
+
+" Backup and undo files
+set nobackup                    " create a permanent backup for a file
+set nowritebackup               " create temporary backup for a file
+set noswapfile                  " not create swapfiles
+" set undofile                    " persistent undo
+" set undodir=~/,vim/undodir      " directory for undofiles
+
+" No sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+
+"
+" Key Bindings
+"
+
+
+let mapleader = ","             " remap the leader key
+let g:mapleader = ","
+                                " act like D and C
+nnoremap Y y$
+                                " Open help in new tab
+map <leader>h :tab help 
+                                " fast saving
+nmap <leader>w :w!<cr>
+                                " scroll the viewport faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+" disable Arrow keys in Escape mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" disable Arrow keys in Insert mode
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" easier navigation between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" stop the highlighting for the latest search results
+map <silent> <leader><cr> :nohlsearch<cr>
+
+" close all the buffers
+map <leader>ba :bufdo bd<cr>
+
+map <leader>bl :bnext<cr>
+map <leader>bh :bprevious<cr>
+
+" create, close, move tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove 
+map <leader>t<leader> :tabnext 
+
+" toggle between the current and the last accessed tab
+let g:lasttab = 1
+nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
+autocmd TabLeave * let g:lasttab = tabpagenr()
+
+" opens a new tab with the current buffer's path
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+" switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Quickly open a buffer
+map <leader>q :e ~/buffer<cr>
+
+" Quickly open a markdown buffer
+map <leader>x :e ~/buffer.md<cr>
+
+" Toggle paste mode on and off
+map <leader>p :setlocal paste!<cr>
+
+" Edit vim config
+map <leader>e :e! ~/.vimrc<cr>
+map <leader>r :source $MYVIMRC<cr>
+
+" Auto groups
+augroup vimrc 
+  autocmd!
+  autocmd FileType netrw setl bufhidden=delete
+  " Auto reload vimconfig at save
+  " autocmd BufWritePost $MYVIMRC source % | redraw | echom \"Reloaded \" . $MYVIMRC
+  
+  " Return to last edit position when opening files
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \ exe "normal! g'\"" |
+    \ endif
+augroup END
+
+"
+" Theme
+"
+set term=$TERM " tmux-256color 
+" set Vim-specific sequences for RGB colors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+syntax enable                   " switch on syntax highlighting
+colorscheme gruvbox
+" let g:gruvbox_contrast_dark='soft'
+set background=dark
+" set colorcolumn=80              " highlight column 80
+" highlight ColorColumn ctermbg=235 guibg=#2c2d27
+
+" Trasparent background
+" highlight Normal ctermbg=NONE guibg=NONE
+" highlight NonText ctermbg=NONE guibg=NONE
+
+"
+" Plugins
+"
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => netrw
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_alto = 1
+let g:netrw_winsize = 20
+let g:netrw_hide = 1
+let g:netrw_silent = 1                " transfers done silently
+
+map <leader>nn :Lexplore<cr>
+
+" " open a netrw automatically when vim starts up and no files were specified
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd StdinReadPre * let s:std_in=1
+"   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | Vexplore | endif
+" augroup END
+
+" " close vim if the only window left open is a NERDTree
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => lightline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \ 'active': {
+      \   'left': [ ['mode', 'paste'],
+      \             ['readonly', 'absolutepath', 'modified'] ],
+      \   'right': [ ['lineinfo', 'fugitive'] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \ },
+      \ 'separator': { 'left': ' ', 'right': ' ' },
+      \ 'subseparator': { 'left': ' ', 'right': ' ' }
+      \ }
+
+let g:lightline.tabline = { 'right': [ ] }
