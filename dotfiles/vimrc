@@ -9,13 +9,15 @@ call plug#begin('~/.vim/bundle')
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'morhetz/gruvbox'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'fatih/vim-go'
 call plug#end()
 
 " Basic settings
 set nocompatible                " enables Vim specific features
 filetype plugin on              " enable filetype detection
 set autoread                    " read again the file if changed from outside
-" set autowrite                   " save when using next, !, etc.
+set autowrite                   " save when using next, !, etc.
 set backspace=eol,start,indent  " configure backspace so it acts as it should act
 
 " Indentation and tabs
@@ -49,12 +51,12 @@ set wrap                        " lines longer than width will wrap
 set whichwrap+=h,l              " move to the next line after the end of the line 
 set linebreak                   " wrap long lines at a character in 'breakat'
 set scrolloff=5                 " minimal lines above and below the cursor.
-" set number                      " show absolute line numbers
-set relativenumber              " show relative line numbers
+set number                      " show absolute line numbers
+set norelativenumber              " show relative line numbers
 " augroup numbertoggle
 "   autocmd!
-"   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-"   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+"   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber | set nonumber
+"   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber | set number
 " augroup END
 " set foldcolumn=1                " add a bit extra margin to the left
 
@@ -64,7 +66,7 @@ set noshowmode                  " don't show status mode, disabled for lightline
 set ruler                       " always show current position
 set wildmenu                    " turn on the WiLd menu
 set cmdheight=1                 " height of the command bar
-set mouse=a
+" set mouse=a
 if has('clipboard')
   set clipboard=unnamed,unnamedplus
 endif
@@ -81,8 +83,8 @@ set showtabline=1               " always display the tab pages
 set nobackup                    " create a permanent backup for a file
 set nowritebackup               " create temporary backup for a file
 set noswapfile                  " not create swapfiles
-" set undofile                    " persistent undo
-" set undodir=~/,vim/undodir      " directory for undofiles
+set undofile                    " persistent undo
+set undodir=~/.vim/undodir      " directory for undofiles
 
 " No sound on errors
 set noerrorbells
@@ -93,7 +95,6 @@ set t_vb=
 " Key Bindings
 "
 
-
 let mapleader = ","             " remap the leader key
 let g:mapleader = ","
                                 " act like D and C
@@ -102,6 +103,7 @@ nnoremap Y y$
 map <leader>h :tab help 
                                 " fast saving
 nmap <leader>w :w!<cr>
+nmap <leader>q :q!<cr>
                                 " scroll the viewport faster
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
@@ -151,11 +153,8 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" Quickly open a buffer
-map <leader>q :e ~/buffer<cr>
-
 " Quickly open a markdown buffer
-map <leader>x :e ~/buffer.md<cr>
+map <leader>n :e ~/Documents/notes.md<cr>
 
 " Toggle paste mode on and off
 map <leader>p :setlocal paste!<cr>
@@ -207,16 +206,16 @@ set background=dark
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => netrw
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_alto = 1
-let g:netrw_winsize = 20
-let g:netrw_hide = 1
-let g:netrw_silent = 1                " transfers done silently
+" let g:netrw_banner = 0
+" let g:netrw_liststyle = 3
+" let g:netrw_browse_split = 4
+" let g:netrw_altv = 1
+" let g:netrw_alto = 1
+" let g:netrw_winsize = 20
+" let g:netrw_hide = 1
+" let g:netrw_silent = 1                " transfers done silently
 
-map <leader>nn :Lexplore<cr>
+" map <leader>nn :Lexplore<cr>
 
 " " open a netrw automatically when vim starts up and no files were specified
 " augroup ProjectDrawer
@@ -225,8 +224,31 @@ map <leader>nn :Lexplore<cr>
 "   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | Vexplore | endif
 " augroup END
 
-" " close vim if the only window left open is a NERDTree
+" " close vim if the only window left open
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-go
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:go_fmt_command = "goimports"
+" let g:go_fmt_fail_silently = 1
+let g:go_metalinter_autosave = 1
+
+map <leader>gb :GoBuild<cr>
+map <leader>gr :GoRun<cr>
+map <leader>gt :GoTest<cr>
+map <leader>gc :GoCoverageToggle<cr>
+map <leader>gd :GoDoc<cr>
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+
+augroup go
+  autocmd!
+  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -234,7 +256,7 @@ let g:lightline = {
       \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
-      \             ['readonly', 'absolutepath', 'modified'] ],
+      \             ['readonly', 'filename', 'modified'] ],
       \   'right': [ ['lineinfo', 'fugitive'] ]
       \ },
       \ 'component': {
