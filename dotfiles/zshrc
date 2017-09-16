@@ -1,4 +1,14 @@
-export GOPATH=$HOME
+#
+# Private
+#
+
+if [[ -f ~/.localrc ]]; then
+    source ~/.localrc
+fi
+
+#
+# Oh-my-zsh
+#
 
 # Path to your oh-my-zsh installation.
 export ZSH=/home/dobmayer/.oh-my-zsh
@@ -8,18 +18,18 @@ ZSH_THEME=""
 HIST_STAMPS="yyyy-mm-dd"
 
 # Start tmux at startup
-export ZSH_TMUX_AUTOSTART=true
+export ZSH_TMUX_AUTOSTART=false
 
 # Enable zsh plugins
 plugins=(colored-man-pages docker git history sudo systemd tmux vagrant zsh_reload)
-
 source $ZSH/oh-my-zsh.sh
 
 # completions automatically find new executables in the path
 zstyle ':completion:*' rehash true
 
-# Do not ask for confirmation for `rm *' or `rm path/*'
-setopt rm_star_silent
+#
+# Settings
+#
 
 PROMPT_SYMBOL='❯'
 PROMPT='%(?.%F{207}.%F{160})$PROMPT_SYMBOL%f '
@@ -27,51 +37,54 @@ PROMPT='%(?.%F{207}.%F{160})$PROMPT_SYMBOL%f '
 # 10ms for key sequences
 KEYTIMEOUT=1
 
+# Do not ask for confirmation for `rm *' or `rm path/*'
+setopt rm_star_silent
+
 # Set for colored man pages
 export GROFF_NO_SGR=1
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+  export EDITOR='vimx'
 else
   # Will be nvim
-  export EDITOR='vim'
+  export EDITOR='vimx'
 fi
 
-# set alacritty's opacity
-so() {
-  local opacity=$1
-  sed -Ei "/^background_opacity/s/[0-9].[0-9]+/${opacity}/" $HOME/.alacritty.yml
-}
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-# BASE16_SHELL=$HOME/.config/base16-shell/
-# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-
+#
 # Aliases
+#
+
 if [ -e /usr/bin/vimx ]; then
   alias vim='/usr/bin/vimx'
 fi
 
-alias talicska='sudo mount raspi:/mnt/myhdd /mnt/talicska/'
 alias la='exa -abghl --git --color=automatic'
 alias o='xdg-open'
 alias rp="export RPROMPT='%F{40}%~'"
+alias -g M="| more"
+
 alias zshrc="$EDITOR ~/.zshrc" 
 alias tmux.conf="$EDITOR ~/.tmux.conf"
 alias vimrc="$EDITOR ~/.vimrc"
 
+# DNF
 alias dnfp='dnf provides'
 alias dnfli='dnf list --installed'
 alias dnfla='dnf list --available'
 alias dnfu='sudo dnf upgrade'
 alias dnfi='sudo dnf install'
 
-alias -g M="| more"
-
-export GOOGLE_PROJECT_ID='firstproject-161719'
+export GOPATH=$HOME
 export PACKER_CACHE_DIR=$HOME/.packer.d/cache
 export VAGRANT_DEFAULT_PROVIDER='libvirt'
+
+#
+# Functions
+#
+
+# set alacritty's opacity
+so() {
+  local opacity=$1
+  sed -Ei "/^background_opacity/s/[0-9].[0-9]+/${opacity}/" $HOME/.alacritty.yml
+}
