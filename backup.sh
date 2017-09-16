@@ -14,6 +14,7 @@ DOTFILES=(
 )
 
 BACKUP_DIR=dotfiles
+BOOKMARK=$HOME/.config/vivaldi/Default/Bookmarks
 
 err() {
     echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: " "$@" >&2
@@ -21,16 +22,16 @@ err() {
 
 main() {
   for dotfile in "${DOTFILES[@]}"; do
-    local filename=${HOME}/.${dotfile}
-    if [[ -f "${filename}" ]]; then
-      local copied
-      if ! copied=$(cp -uv "${filename}" "./${BACKUP_DIR}/${dotfile}"); then
-        err "Can't copy ${filename}..."
-      elif [[ -n "${copied}" ]]; then
-        printf "backed up %s\n" "${filename}"
-      fi
-    else
-      err "${filename} does not exist"
+    local file=$HOME/.${dotfile}
+    if [[ ! -f "${file}" ]]; then
+      err "The file ${file} doesn't exist"
+      continue
+    fi
+
+    local current_dir=$(dirname $(readlink -f "$0"))
+    local copied=$(cp -uv "${file}" "${current_dir}/${BACKUP_DIR}/${dotfile}")
+    if [[ -n "${copied}" ]]; then
+      printf "backed up %s\n" "${file}"
     fi
   done
 }
