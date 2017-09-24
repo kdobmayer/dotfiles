@@ -79,7 +79,7 @@ visual_bell:
   animation: EaseOutExpo
   duration: 0
 
-background_opacity: 0.9
+background_opacity: 1.0
 
 key_bindings:
   - { key: V,        mods: Control|Shift,    action: Paste               }

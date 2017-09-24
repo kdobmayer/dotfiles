@@ -16,5 +16,4 @@ fi
 if ! xrandr | grep -q  2560x1080R; then
   xrandr --newmode "2560x1080R"  181.25  2560 2608 2640 2720  1080 1083 1093 1111 +hsync -vsync
   xrandr --addmode HDMI-2 2560x1080R
-  xrandr --output VGA-1 --off --output eDP-1 --off --output HDMI-3 --off --output HDMI-2 --primary --mode 2560x1080R --pos 0x0 --rotate normal --output HDMI-1 --off --output DP-3 --off --output DP-2 --off --output DP-1 --off
 fi

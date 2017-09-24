@@ -2,7 +2,7 @@
 # Private
 #
 
-if [[ -f ~/.localrc ]]; then
+if [[ -a ~/.localrc ]]; then
     source ~/.localrc
 fi
 
@@ -63,10 +63,13 @@ alias la='exa -abghl --git --color=automatic'
 alias o='xdg-open'
 alias rp="export RPROMPT='%F{40}%~'"
 alias -g M="| more"
+alias hu='setxkbmap hu'
+alias us='setxkbmap us'
 
 alias zshrc="$EDITOR ~/.zshrc" 
 alias tmux.conf="$EDITOR ~/.tmux.conf"
 alias vimrc="$EDITOR ~/.vimrc"
+alias i3config="$EDITOR ~/.config/i3/config"
 
 # DNF
 alias dnfp='dnf provides'

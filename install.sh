@@ -28,3 +28,10 @@ done
 
 # youtube-dl
 sudo -H pip install --upgrade youtube-dl
+
+# i3
+# xkb-switch
+# i3blocks
+git clone https://github.com/vivien/i3blocks.git
+make -C i3blocks clean all
+sudo make -C i3blocks install
