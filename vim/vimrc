@@ -11,6 +11,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'morhetz/gruvbox'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'fatih/vim-go'
+Plug 'PotatoesMaster/i3-vim-syntax'
 call plug#end()
 
 " Basic settings
