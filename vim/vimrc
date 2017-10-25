@@ -11,7 +11,10 @@ Plug 'itchyny/lightline.vim'
 Plug 'morhetz/gruvbox'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'fatih/vim-go'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'SirVer/ultisnips'
 Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'tpope/vim-vinegar'
 call plug#end()
 
 " Basic settings
@@ -104,7 +107,7 @@ nnoremap Y y$
 map <leader>h :tab help 
                                 " fast saving
 nmap <leader>w :w!<cr>
-nmap <leader>q :q!<cr>
+nmap <leader>q :q<cr>
                                 " scroll the viewport faster
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
@@ -193,7 +196,7 @@ syntax enable                   " switch on syntax highlighting
 colorscheme gruvbox
 " let g:gruvbox_contrast_dark='soft'
 set background=dark
-" set colorcolumn=80              " highlight column 80
+set colorcolumn=80              " highlight column 80
 " highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 " Trasparent background
@@ -205,19 +208,8 @@ set background=dark
 "
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => netrw
+" => ranger.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:netrw_banner = 0
-" let g:netrw_liststyle = 3
-" let g:netrw_browse_split = 4
-" let g:netrw_altv = 1
-" let g:netrw_alto = 1
-" let g:netrw_winsize = 20
-" let g:netrw_hide = 1
-" let g:netrw_silent = 1                " transfers done silently
-
-" map <leader>nn :Lexplore<cr>
-
 " " open a netrw automatically when vim starts up and no files were specified
 " augroup ProjectDrawer
 "   autocmd!
@@ -231,15 +223,44 @@ set background=dark
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-go
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
-" let g:go_fmt_fail_silently = 1
-let g:go_metalinter_autosave = 1
+let g:go_fmt_fail_silently = 1
+let g:go_metalinter_autosave = 0
+"let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 
-map <leader>gb :GoBuild<cr>
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+map <leader>gb :<C-u>call <SID>build_go_files()<cr>
+
 map <leader>gr :GoRun<cr>
 map <leader>gt :GoTest<cr>
+map <leader>gT :GoTestFunc<cr>
 map <leader>gc :GoCoverageToggle<cr>
+map <leader>gC :GoCoverageBrowser<cr>
 map <leader>gd :GoDoc<cr>
+map <leader>gi :GoInfo<cr>
+"let g:go_auto_type_info = 1
+"set updatetime=100
+"let g:go_auto_sameids = 1
+map <leader>gl :GoMetaLinter<cr>
+let g:go_metalinter_deadline = "5s"
+map <leader>ga :GoAlternate<cr>
+
+map <leader>gn :GoRename<space>
+
+
+map <C-n> :cnext<cr>
+map <C-p> :cprevious<cr>
+nnoremap <leader>a :cclose<cr>
 
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1

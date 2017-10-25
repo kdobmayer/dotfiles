@@ -17,3 +17,9 @@ if ! xrandr | grep -q  2560x1080R; then
   xrandr --newmode "2560x1080R"  181.25  2560 2608 2640 2720  1080 1083 1093 1111 +hsync -vsync
   xrandr --addmode HDMI-2 2560x1080R
 fi
+
+# Add fonts from HOME directory
+xset +fp $HOME/.fonts
+xset fp rehash
+
+export PATH="$HOME/.cargo/bin:$PATH"

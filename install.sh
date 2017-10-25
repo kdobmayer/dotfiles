@@ -4,8 +4,7 @@
 
 set -o pipefail
 
-CURRENT_DIR=$(dirname $(readlink -f "$0"))
-BACKUP_DIR=dotfiles
+SCRIPT_DIR=$(dirname $(readlink -f "$0"))
 
 # Packages
 pacman -Syu curl git tmux vim xcape zsh
@@ -23,7 +22,7 @@ https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 # Symlink dotfiles
 for dotfile in backups/*; do
   file=$(basename "${dotfile}")
-  ln -s $CURRENT_DIR/$BACKUP_DIR/"${file}" $HOME/."${file}"
+  ln -s $SCRIPT_DIR/$BACKUP_DIR/"${file}" $HOME/."${file}"
 done
 
 # youtube-dl

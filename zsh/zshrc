@@ -21,7 +21,7 @@ HIST_STAMPS="yyyy-mm-dd"
 export ZSH_TMUX_AUTOSTART=false
 
 # Enable zsh plugins
-plugins=(colored-man-pages docker git history sudo systemd tmux vagrant zsh_reload)
+plugins=(colored-man-pages docker extract git history sudo systemd vagrant zsh_reload)
 source $ZSH/oh-my-zsh.sh
 
 # completions automatically find new executables in the path
@@ -59,25 +59,34 @@ if [ -e /usr/bin/vimx ]; then
   alias vim='/usr/bin/vimx'
 fi
 
+# system
 alias la='exa -abghl --git --color=automatic'
 alias o='xdg-open'
-alias rp="export RPROMPT='%F{40}%~'"
 alias -g M="| more"
 alias hu='setxkbmap hu'
 alias us='setxkbmap us'
 
+# edit configs
 alias zshrc="$EDITOR ~/.zshrc" 
 alias tmux.conf="$EDITOR ~/.tmux.conf"
 alias vimrc="$EDITOR ~/.vimrc"
 alias i3config="$EDITOR ~/.config/i3/config"
 
-# DNF
+# dnf
 alias dnfp='dnf provides'
 alias dnfli='dnf list --installed'
 alias dnfla='dnf list --available'
 alias dnfu='sudo dnf upgrade'
 alias dnfi='sudo dnf install'
 
+# go
+alias gorun='tput clear; go run main.go'
+alias gd='go doc'
+
+# Bitrise
+alias br='bitrise run'
+
+# environment variables
 export GOPATH=$HOME
 export PACKER_CACHE_DIR=$HOME/.packer.d/cache
 export VAGRANT_DEFAULT_PROVIDER='libvirt'
@@ -86,8 +95,52 @@ export VAGRANT_DEFAULT_PROVIDER='libvirt'
 # Functions
 #
 
+# toggle right prompt
+rpr() {
+  if [[ -z "$RPROMPT" ]]; then
+    RPROMPT='%F{40}%~'
+  else
+    RPROMPT=""
+  fi
+}
+
 # set alacritty's opacity
 so() {
   local opacity=$1
-  sed -Ei "/^background_opacity/s/[0-9].[0-9]+/${opacity}/" $HOME/.alacritty.yml
+  sed -Ei "/^background_opacity/s/[0-9].[0-9]+/${opacity}/" $HOME/.config/alacritty/alacritty.yml
+}
+
+# override builtin exit when in tmux
+# exit() {
+#   if [[ -z "$TMUX" ]]; then
+#     builtin exit
+#   else
+#     tmux kill-window \; detach
+#   fi
+# }
+# if [[ -z "$TMUX" ]] && tmux has-session -t $USER &> /dev/null; then
+#     exec tmux new-session -t $USER \; \
+#       set-option destroy-unattached \; \
+#       new-window
+# fi
+
+proxyoff() {
+	unset http_proxy https_proxy no_proxy HTTP_PROXY HTTPS_PROXY NO_PROXY
+	sudo sed -i s/^proxy/#proxy/g /etc/dnf/dnf.conf
+	sudo sed -i s/^Environment/#Environment/g /etc/systemd/system/docker.service.d/http-proxy.conf
+	sudo systemctl daemon-reload
+	sudo systemctl restart docker
+}
+
+proxyon() {
+	export http_proxy=http://10.144.1.10:8080 \
+		https_proxy=http://10.144.1.10:8080 \
+		no_proxy="localhost,127.0.0.0/8,::1,.ntms.nsn-rdnet.net,.nokia.com" \
+    HTTP_PROXY=http://10.144.1.10:8080 \
+    HTTPS_PROXY=http://10.144.1.10:8080 \
+    NO_PROXY="localhost,127.0.0.0/8,::1,.ntms.nsn-rdnet.net,.nokia.com" 
+  sudo sed -i s/^#proxy/proxy/g /etc/dnf/dnf.conf
+	sudo sed -i s/^#Environment/Environment/g /etc/systemd/system/docker.service.d/http-proxy.conf
+	sudo systemctl daemon-reload
+	sudo systemctl restart docker
 }
