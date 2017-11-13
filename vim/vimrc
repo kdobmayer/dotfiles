@@ -136,8 +136,8 @@ map <silent> <leader><cr> :nohlsearch<cr>
 " close all the buffers
 map <leader>ba :bufdo bd<cr>
 
-map <leader>bl :bnext<cr>
-map <leader>bh :bprevious<cr>
+map <leader>n :bnext<cr>
+map <leader>p :bprevious<cr>
 
 " create, close, move tabs
 map <leader>tn :tabnew<cr>
@@ -152,16 +152,16 @@ nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 autocmd TabLeave * let g:lasttab = tabpagenr()
 
 " opens a new tab with the current buffer's path
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+" map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Quickly open a markdown buffer
-map <leader>n :e ~/Documents/notes.md<cr>
+" map <leader>n :e ~/Documents/notes.md<cr>
 
 " Toggle paste mode on and off
-map <leader>p :setlocal paste!<cr>
+map <leader>mp :setlocal paste!<cr>
 
 " Edit vim config
 map <leader>e :e! ~/.vimrc<cr>
@@ -196,7 +196,7 @@ syntax enable                   " switch on syntax highlighting
 colorscheme gruvbox
 " let g:gruvbox_contrast_dark='soft'
 set background=dark
-set colorcolumn=80              " highlight column 80
+set colorcolumn=120              " highlight column
 " highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 " Trasparent background

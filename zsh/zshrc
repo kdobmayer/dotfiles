@@ -11,17 +11,17 @@ fi
 #
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/dobmayer/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME=""
 
 # Command execution timestamp format shown in the history command output.
 HIST_STAMPS="yyyy-mm-dd"
 
 # Start tmux at startup
-export ZSH_TMUX_AUTOSTART=false
+export ZSH_TMUX_AUTOSTART=true
 
 # Enable zsh plugins
-plugins=(colored-man-pages docker extract git history sudo systemd vagrant zsh_reload)
+plugins=(colored-man-pages docker extract git history sudo systemd tmux vagrant zsh_reload)
 source $ZSH/oh-my-zsh.sh
 
 # completions automatically find new executables in the path
@@ -33,6 +33,7 @@ zstyle ':completion:*' rehash true
 
 PROMPT_SYMBOL='❯'
 PROMPT='%(?.%F{207}.%F{160})$PROMPT_SYMBOL%f '
+RPROMPT='%F{40}%~'
 
 # 10ms for key sequences
 KEYTIMEOUT=1
@@ -45,21 +46,22 @@ export GROFF_NO_SGR=1
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vimx'
+  export EDITOR='vim'
 else
   # Will be nvim
-  export EDITOR='vimx'
+  export EDITOR='vim'
 fi
 
 #
 # Aliases
 #
 
-if [ -e /usr/bin/vimx ]; then
-  alias vim='/usr/bin/vimx'
-fi
+#if [ -e /usr/bin/vimx ]; then
+#  alias vim='/usr/bin/vimx'
+#fi
 
 # system
+alias vi='vim'
 alias la='exa -abghl --git --color=automatic'
 alias o='xdg-open'
 alias -g M="| more"
@@ -73,11 +75,11 @@ alias vimrc="$EDITOR ~/.vimrc"
 alias i3config="$EDITOR ~/.config/i3/config"
 
 # dnf
-alias dnfp='dnf provides'
-alias dnfli='dnf list --installed'
-alias dnfla='dnf list --available'
-alias dnfu='sudo dnf upgrade'
-alias dnfi='sudo dnf install'
+#alias dnfp='dnf provides'
+#alias dnfli='dnf list --installed'
+#alias dnfla='dnf list --available'
+#alias dnfu='sudo dnf upgrade'
+#alias dnfi='sudo dnf install'
 
 # go
 alias gorun='tput clear; go run main.go'
@@ -87,7 +89,7 @@ alias gd='go doc'
 alias br='bitrise run'
 
 # environment variables
-export GOPATH=$HOME
+export GOPATH=/go
 export PACKER_CACHE_DIR=$HOME/.packer.d/cache
 export VAGRANT_DEFAULT_PROVIDER='libvirt'
 
@@ -123,24 +125,3 @@ so() {
 #       set-option destroy-unattached \; \
 #       new-window
 # fi
-
-proxyoff() {
-	unset http_proxy https_proxy no_proxy HTTP_PROXY HTTPS_PROXY NO_PROXY
-	sudo sed -i s/^proxy/#proxy/g /etc/dnf/dnf.conf
-	sudo sed -i s/^Environment/#Environment/g /etc/systemd/system/docker.service.d/http-proxy.conf
-	sudo systemctl daemon-reload
-	sudo systemctl restart docker
-}
-
-proxyon() {
-	export http_proxy=http://10.144.1.10:8080 \
-		https_proxy=http://10.144.1.10:8080 \
-		no_proxy="localhost,127.0.0.0/8,::1,.ntms.nsn-rdnet.net,.nokia.com" \
-    HTTP_PROXY=http://10.144.1.10:8080 \
-    HTTPS_PROXY=http://10.144.1.10:8080 \
-    NO_PROXY="localhost,127.0.0.0/8,::1,.ntms.nsn-rdnet.net,.nokia.com" 
-  sudo sed -i s/^#proxy/proxy/g /etc/dnf/dnf.conf
-	sudo sed -i s/^#Environment/Environment/g /etc/systemd/system/docker.service.d/http-proxy.conf
-	sudo systemctl daemon-reload
-	sudo systemctl restart docker
-}

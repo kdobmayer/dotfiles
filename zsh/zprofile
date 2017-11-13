@@ -1,25 +1,26 @@
 typeset -U path
 path=(~/bin ~/.local/bin /usr/local/bin $path)
 
+# Map caps lock to Control
 if which setxkbmap &> /dev/null; then
   pkill setxbmap
   setxkbmap -option 'caps:ctrl_modifier'
 fi
 
-# Map caps lock to escape
+# Map caps lock to Escape
 if which xcape &> /dev/null; then
   pkill xcape
   xcape -e 'Caps_Lock=Escape'
 fi
 
 # Set widescreen
-if ! xrandr | grep -q  2560x1080R; then
-  xrandr --newmode "2560x1080R"  181.25  2560 2608 2640 2720  1080 1083 1093 1111 +hsync -vsync
-  xrandr --addmode HDMI-2 2560x1080R
-fi
+#if ! xrandr | grep -q  2560x1080R; then
+#  xrandr --newmode "2560x1080R"  181.25  2560 2608 2640 2720  1080 1083 1093 1111 +hsync -vsync
+#  xrandr --addmode HDMI-2 2560x1080R
+#fi
 
 # Add fonts from HOME directory
-xset +fp $HOME/.fonts
-xset fp rehash
+#xset +fp $HOME/.fonts
+#xset fp rehash
 
 export PATH="$HOME/.cargo/bin:$PATH"
