@@ -252,6 +252,7 @@ map <leader>gi :GoInfo<cr>
 "set updatetime=100
 "let g:go_auto_sameids = 1
 map <leader>gl :GoMetaLinter<cr>
+let g:go_metalinter_autosave = 0
 let g:go_metalinter_deadline = "5s"
 map <leader>ga :GoAlternate<cr>
 

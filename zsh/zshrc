@@ -21,7 +21,7 @@ HIST_STAMPS="yyyy-mm-dd"
 export ZSH_TMUX_AUTOSTART=true
 
 # Enable zsh plugins
-plugins=(colored-man-pages docker extract git history sudo systemd tmux vagrant zsh_reload)
+plugins=(colored-man-pages docker extract git history sudo tmux zsh_reload)
 source $ZSH/oh-my-zsh.sh
 
 # completions automatically find new executables in the path
@@ -84,9 +84,12 @@ alias i3config="$EDITOR ~/.config/i3/config"
 # go
 alias gorun='tput clear; go run main.go'
 alias gd='go doc'
+alias github='cd $GOPATH/src/github.com'
+alias depup='dep ensure -v && dep ensure -v -update'
 
 # Bitrise
 alias br='bitrise run'
+alias bla='bitrise-log-analyzer'
 
 # environment variables
 export GOPATH=/go
