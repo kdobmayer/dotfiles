@@ -20,6 +20,9 @@ HIST_STAMPS="yyyy-mm-dd"
 # Start tmux at startup
 export ZSH_TMUX_AUTOSTART=true
 
+# Not allow zsh to rename window titles
+DISABLE_AUTO_TITLE="true"
+
 # Enable zsh plugins
 plugins=(colored-man-pages docker extract git history sudo tmux zsh_reload)
 source $ZSH/oh-my-zsh.sh
@@ -33,7 +36,7 @@ zstyle ':completion:*' rehash true
 
 PROMPT_SYMBOL='❯'
 PROMPT='%(?.%F{207}.%F{160})$PROMPT_SYMBOL%f '
-RPROMPT='%F{40}%~'
+RPROMPT='%F{40}%~$(git_branch)'
 
 # 10ms for key sequences
 KEYTIMEOUT=1
@@ -51,7 +54,6 @@ else
   # Will be nvim
   export EDITOR='vim'
 fi
-
 #
 # Aliases
 #
@@ -90,6 +92,7 @@ alias depup='dep ensure -v && dep ensure -v -update'
 # Bitrise
 alias br='bitrise run'
 alias bla='bitrise-log-analyzer'
+export MY_STEPLIB_REPO_FORK_GIT_URL=git@github.com:kdobmayer/bitrise-steplib.git
 
 # environment variables
 export GOPATH=/go
@@ -103,7 +106,7 @@ export VAGRANT_DEFAULT_PROVIDER='libvirt'
 # toggle right prompt
 rpr() {
   if [[ -z "$RPROMPT" ]]; then
-    RPROMPT='%F{40}%~'
+    RPROMPT='%F{41}%~$(git_branch)'
   else
     RPROMPT=""
   fi
@@ -115,16 +118,8 @@ so() {
   sed -Ei "/^background_opacity/s/[0-9].[0-9]+/${opacity}/" $HOME/.config/alacritty/alacritty.yml
 }
 
-# override builtin exit when in tmux
-# exit() {
-#   if [[ -z "$TMUX" ]]; then
-#     builtin exit
-#   else
-#     tmux kill-window \; detach
-#   fi
-# }
-# if [[ -z "$TMUX" ]] && tmux has-session -t $USER &> /dev/null; then
-#     exec tmux new-session -t $USER \; \
-#       set-option destroy-unattached \; \
-#       new-window
-# fi
+git_branch() {
+  if [[ -d .git ]]; then
+    echo "%F{123} $(git branch | awk '/\*/ {print $2}')%f"
+  fi
+}
