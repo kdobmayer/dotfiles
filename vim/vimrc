@@ -164,7 +164,7 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 map <leader>mp :setlocal paste!<cr>
 
 " Edit vim config
-map <leader>e :e! ~/.vimrc<cr>
+map <leader>ee :e! ~/.vimrc<cr>
 map <leader>r :source $MYVIMRC<cr>
 
 " Auto groups

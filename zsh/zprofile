@@ -23,8 +23,7 @@ fi
 #xset +fp $HOME/.fonts
 #xset fp rehash
 
-
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export GOPATH=/go
-export PATH="$HOME/.cargo/bin:$PATH:$GOPATH/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+export PATH="$HOME/.cargo/bin:$PATH:$GOPATH/bin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools"
 
