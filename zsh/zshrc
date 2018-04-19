@@ -91,13 +91,12 @@ alias depup='dep ensure -v && dep ensure -v -update'
 
 # Bitrise
 alias br='bitrise run'
-alias bla='bitrise-log-analyzer'
 export MY_STEPLIB_REPO_FORK_GIT_URL=git@github.com:kdobmayer/bitrise-steplib.git
 
 # environment variables
 export GOPATH=/go
 export PACKER_CACHE_DIR=$HOME/.packer.d/cache
-export VAGRANT_DEFAULT_PROVIDER='libvirt'
+#export VAGRANT_DEFAULT_PROVIDER='libvirt'
 
 #
 # Functions

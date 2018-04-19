@@ -15,7 +15,11 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'tpope/vim-vinegar'
+Plug 'chase/vim-ansible-yaml'
 call plug#end()
+
+"Temp
+:set mouse=n
 
 " Basic settings
 set nocompatible                " enables Vim specific features
@@ -196,7 +200,7 @@ syntax enable                   " switch on syntax highlighting
 colorscheme gruvbox
 " let g:gruvbox_contrast_dark='soft'
 set background=dark
-set colorcolumn=120              " highlight column
+set colorcolumn=80              " highlight column
 " highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 " Trasparent background
@@ -227,7 +231,8 @@ let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
 let g:go_metalinter_autosave = 0
-"let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_metalinter_deadline = "5s"
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
@@ -252,8 +257,6 @@ map <leader>gi :GoInfo<cr>
 "set updatetime=100
 "let g:go_auto_sameids = 1
 map <leader>gl :GoMetaLinter<cr>
-let g:go_metalinter_autosave = 0
-let g:go_metalinter_deadline = "5s"
 map <leader>ga :GoAlternate<cr>
 
 map <leader>gn :GoRename<space>
@@ -266,12 +269,13 @@ nnoremap <leader>a :cclose<cr>
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
+let g:go_highlight_function_calls = 1
 
 augroup go
   autocmd!
   autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 augroup END
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
