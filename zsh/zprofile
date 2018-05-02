@@ -26,4 +26,3 @@ fi
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export GOPATH=/go
 export PATH="$HOME/.cargo/bin:$PATH:$GOPATH/bin:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$HOME/.google/bin"
-
