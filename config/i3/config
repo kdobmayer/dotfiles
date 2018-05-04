@@ -1,7 +1,7 @@
 # i3 config file (v4)
 
 # mod key
-set $mod Mod4
+set $mod Mod1
 
 # font
 font pango:hack 11
@@ -13,8 +13,8 @@ new_window pixel 1
 for_window [class="^.*"] border pixel 0
 
 # set gaps between windows
-gaps inner 5
-gaps outer 0
+# gaps inner 5
+# gaps outer 0
 
 # hide borders adjacent to the screen edges
 hide_edge_borders smart
@@ -36,7 +36,7 @@ focus_on_window_activation none
 #
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec urxvt256c
 
 # kill focused window
 bindsym $mod+q kill
@@ -128,7 +128,8 @@ bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+r restart
 
 # lock screen
-bindsym $mod+c exec lock ~/Pictures/lock.png
+# bindsym $mod+c exec lock ~/Pictures/lock.png
+bindsym $mod+c exec lock
 
 # exit i3
 bindsym $mod+x exit
@@ -181,22 +182,22 @@ client.focused_inactive $background_color $background_color $inactive_color
 client.urgent           $urgent_color     $urgent_color     $text_color
 
 # bar
-# bar {
-#     mode dock
-#     position bottom
-#     status_command i3blocks -c ~/.config/i3/i3blocks.conf
-#     tray_padding 3 px
-#     strip_workspace_numbers yes
-# 
-#     colors {
-#         background $bar_color
-#         separator #757575
-#         #                  border        background    text
-#         focused_workspace  $bar_color    $bar_color    $text_color
-#         inactive_workspace $bar_color    $bar_color    $inactive_color
-#         urgent_workspace   $urgent_color $urgent_color $text_color
-#     }
-# }
+bar {
+    mode dock
+    position bottom
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    tray_padding 3 px
+    #strip_workspace_numbers yes
+
+    colors {
+        background $bar_color
+        separator #757575
+        #                  border        background    text
+        focused_workspace  $bar_color    $bar_color    $text_color
+        inactive_workspace $bar_color    $bar_color    $inactive_color
+        urgent_workspace   $urgent_color $urgent_color $text_color
+    }
+}
 
 #bar {
 #    i3bar_command $HOME/.config/polybar/launch.sh
@@ -225,30 +226,17 @@ exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpaper.png
 # display resolution
 exec_always --no-startup-id xrandr \
   --output VGA-1 --off \
-  --output eDP-1 --off \
-  --output HDMI-3 --off \
-  --output HDMI-2 --primary --mode 2560x1080R --pos 0x0 --rotate normal \
-  --output HDMI-1 --off \
-  --output DP-3 --off \
+  --output HDMI-1 --primary --mode 2560x1080R --pos 0x0 --rotate normal \
+  --output HDMI-2 --off \
   --output DP-2 --off \
   --output DP-1 --off
-
-#exec_always --no-startup-id xrandr \
-#  --output VGA-1 --off \
-#  --output eDP-1 --off \
-#  --output HDMI-3 --off \
-#  --output DP-1 --primary --mode 1920x1200 --pos 0x0 --rotate normal \
-#  --output HDMI-1 --off \
-#  --output DP-3 --off \
-#  --output DP-2 --off \
-#  --output HDMI-2 --off
 
 # keyboard layout
 exec "setxkbmap -layout us,hu"
 exec "setxkbmap -option 'grp:alt_shift_toggle'"
 
 # polybar status bar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # load base layout
 exec --no-startup-id i3-msg \

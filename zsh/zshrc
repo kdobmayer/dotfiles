@@ -6,6 +6,9 @@ if [[ -a ~/.localrc ]]; then
     source ~/.localrc
 fi
 
+# overload system default 256-color palette with precise gruvbox colors
+source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
+
 #
 # Oh-my-zsh
 #
@@ -18,7 +21,7 @@ ZSH_THEME=""
 HIST_STAMPS="yyyy-mm-dd"
 
 # Start tmux at startup
-export ZSH_TMUX_AUTOSTART=true
+#export ZSH_TMUX_AUTOSTART=true
 
 # Not allow zsh to rename window titles
 DISABLE_AUTO_TITLE="true"
@@ -58,9 +61,9 @@ fi
 # Aliases
 #
 
-#if [ -e /usr/bin/vimx ]; then
-#  alias vim='/usr/bin/vimx'
-#fi
+if [ -e /usr/bin/vimx ]; then
+  alias vim='/usr/bin/vimx'
+fi
 
 # system
 alias vi='vim'
@@ -94,7 +97,7 @@ alias br='bitrise run'
 export MY_STEPLIB_REPO_FORK_GIT_URL=git@github.com:kdobmayer/bitrise-steplib.git
 
 # environment variables
-export GOPATH=/go
+#export GOPATH=/go
 export PACKER_CACHE_DIR=$HOME/.packer.d/cache
 #export VAGRANT_DEFAULT_PROVIDER='libvirt'
 
