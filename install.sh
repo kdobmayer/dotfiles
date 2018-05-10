@@ -9,11 +9,9 @@ SCRIPT_DIR=$(dirname $(readlink -f "$0"))
 # Packages
 pacman -Syu curl git tmux vim xcape zsh
 # dependencies: python python3
+# vimx
 
-# Alacritty
-git clone https://aur.archlinux.org/alacritty-git.git
-cd alacritty-git
-makepkg -isr
+# urxvt-256
 
 # Oh-my-zsh
 sh -c "$(curl -fsSL
@@ -42,5 +40,3 @@ sudo make -C i3blocks install
 git clone https://github.com/chjj/compton
 make
 make install
-# nylas mail
-# https://www.nylas.com/download

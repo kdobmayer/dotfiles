@@ -36,7 +36,7 @@ focus_on_window_activation none
 #
 
 # start a terminal
-bindsym $mod+Return exec urxvt256c
+bindsym $mod+Return exec urxvt256cc
 
 # kill focused window
 bindsym $mod+q kill
@@ -80,16 +80,16 @@ bindsym $mod+n floating toggle
 bindsym $mod+b bar mode toggle
 
 # workspace icons
-set $workspace1 "1: "
-set $workspace2 "2: "
-set $workspace3 "3: "
-set $workspace4 "4: "
-set $workspace5 "5: ♪"
-set $workspace6 "6: "
-set $workspace7 "7: "
-set $workspace8 "8: "
-set $workspace9 "9: "
-set $workspace10 "10: "
+set $workspace1 "1"
+set $workspace2 "2"
+set $workspace3 "3"
+set $workspace4 "4"
+set $workspace5 "5"
+set $workspace6 "6"
+set $workspace7 "7"
+set $workspace8 "8"
+set $workspace9 "9"
+set $workspace10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -220,9 +220,6 @@ for_window [window_type="menu"] floating enable
 # startup
 #
 
-# wallpaper
-exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpaper.png
-
 # display resolution
 exec_always --no-startup-id xrandr \
   --output VGA-1 --off \
@@ -231,20 +228,27 @@ exec_always --no-startup-id xrandr \
   --output DP-2 --off \
   --output DP-1 --off
 
+# graphical boost
+exec --no-startup-id compton -b
+
+# wallpaper
+exec_always --no-startup-id feh --bg-scale ~/Pictures/urban_night.jpg
+
 # keyboard layout
 exec "setxkbmap -layout us,hu"
 exec "setxkbmap -option 'grp:alt_shift_toggle'"
+
+# urxvt daemon
+exec --no-startup-id urxvt256cd --quiet --opendisplay --fork
 
 # polybar status bar
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # load base layout
-exec --no-startup-id i3-msg \
-  "workspace $workspace1; append_layout ~/.config/i3/workspace_1.json"
+#exec --no-startup-id i3-msg \
+#  "workspace $workspace1; append_layout ~/.config/i3/workspace_1.json"
 
 # automatically starting applications on startup
 exec vivaldi-stable
-exec --no-startup-id i3-msg "workspace $workspace1; exec alacritty"
+#exec --no-startup-id i3-msg "workspace $workspace1; exec alacritty"
 
-# graphical boost
-exec --no-startup-id compton -b

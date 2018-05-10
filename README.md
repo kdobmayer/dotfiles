@@ -1,2 +1,4 @@
 # dotfiles
-Collection of vim, tmux, and zsh configurations
+
+Collection of i3, vim, tmux, urxvt and zsh configurations.
+
