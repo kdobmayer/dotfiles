@@ -13,8 +13,8 @@ new_window pixel 1
 for_window [class="^.*"] border pixel 0
 
 # set gaps between windows
-# gaps inner 5
-# gaps outer 0
+gaps inner 15
+gaps outer -10
 
 # hide borders adjacent to the screen edges
 hide_edge_borders smart
@@ -36,7 +36,7 @@ focus_on_window_activation none
 #
 
 # start a terminal
-bindsym $mod+Return exec urxvt256cc
+bindsym $mod+Return exec urxvtc
 
 # kill focused window
 bindsym $mod+q kill
@@ -116,7 +116,7 @@ bindsym $mod+Shift+9 move container to workspace $workspace9
 bindsym $mod+Shift+parenright move container to workspace $workspace10
  
 # automatically put windows on specific workspaces
-assign [class="Vivaldi-stable"] → $workspace1
+assign [class="qutebrowser"] → $workspace1
 assign [class="Slack"]  → $workspace8
 assign [class="skypeforlinux"]  → $workspace9
 
@@ -135,10 +135,10 @@ bindsym $mod+c exec lock
 bindsym $mod+x exit
 
 # reboot system
-bindsym $mod+Shift+r exec --no-startup-id systemctl reboot
+bindsym $mod+Shift+r exec --no-startup-id sudo systemctl reboot
 
 # shutdown system
-bindsym $mod+Shift+x exec --no-startup-id systemctl poweroff
+bindsym $mod+Shift+x exec --no-startup-id sudo systemctl poweroff
 
 # resize window
 bindsym $mod+Control+h resize grow width 5 px or 5 ppt
@@ -182,22 +182,22 @@ client.focused_inactive $background_color $background_color $inactive_color
 client.urgent           $urgent_color     $urgent_color     $text_color
 
 # bar
-bar {
-    mode dock
-    position bottom
-    status_command i3blocks -c ~/.config/i3/i3blocks.conf
-    tray_padding 3 px
-    #strip_workspace_numbers yes
-
-    colors {
-        background $bar_color
-        separator #757575
-        #                  border        background    text
-        focused_workspace  $bar_color    $bar_color    $text_color
-        inactive_workspace $bar_color    $bar_color    $inactive_color
-        urgent_workspace   $urgent_color $urgent_color $text_color
-    }
-}
+#bar {
+#    mode dock
+#    position bottom
+#    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+#    tray_padding 3 px
+#    #strip_workspace_numbers yes
+#
+#    colors {
+#        background $bar_color
+#        separator #757575
+#        #                  border        background    text
+#        focused_workspace  $bar_color    $bar_color    $text_color
+#        inactive_workspace $bar_color    $bar_color    $inactive_color
+#        urgent_workspace   $urgent_color $urgent_color $text_color
+#    }
+#}
 
 #bar {
 #    i3bar_command $HOME/.config/polybar/launch.sh
@@ -220,35 +220,32 @@ for_window [window_type="menu"] floating enable
 # startup
 #
 
-# display resolution
-exec_always --no-startup-id xrandr \
-  --output VGA-1 --off \
-  --output HDMI-1 --primary --mode 2560x1080R --pos 0x0 --rotate normal \
-  --output HDMI-2 --off \
-  --output DP-2 --off \
-  --output DP-1 --off
+# apply urxvt settings
+exec --no-startup-id xrdb -merge ~/.Xresources
 
 # graphical boost
 exec --no-startup-id compton -b
 
-# wallpaper
-exec_always --no-startup-id feh --bg-scale ~/Pictures/urban_night.jpg
+# set wallpaper
+exec_always --no-startup-id feh --bg-scale ~/pictures/wallpaper.png
 
-# keyboard layout
-exec "setxkbmap -layout us,hu"
+# add hungarian keyboard layout
+exec "setxkbmap -layout 'us,hu'"
 exec "setxkbmap -option 'grp:alt_shift_toggle'"
 
-# urxvt daemon
-exec --no-startup-id urxvt256cd --quiet --opendisplay --fork
+# start urxvt daemon
+exec --no-startup-id urxvtd --quiet --opendisplay --fork
+
+exec source ~/.zshrc
 
 # polybar status bar
-#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # load base layout
-#exec --no-startup-id i3-msg \
-#  "workspace $workspace1; append_layout ~/.config/i3/workspace_1.json"
+exec --no-startup-id i3-msg \
+  "workspace $workspace1; append_layout ~/.config/i3/workspace_1.json"
 
 # automatically starting applications on startup
-exec vivaldi-stable
-#exec --no-startup-id i3-msg "workspace $workspace1; exec alacritty"
+exec qutebrowser
+#exec --no-startup-id i3-msg "workspace $workspace1; exec urxvtc"
 

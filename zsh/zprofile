@@ -1,32 +1,4 @@
-#typeset -U path
-#path=(~/bin ~/.local/bin /usr/local/bin $path)
-
-# Map caps lock to Control
-if which setxkbmap &> /dev/null; then
-  pkill setxbmap
-  setxkbmap -option 'caps:ctrl_modifier'
+# autostart systemd default session on tty1
+if [[ "$(tty)" == '/dev/tty1' ]]; then
+	exec startx
 fi
-
-# Map caps lock to Escape
-if which xcape &> /dev/null; then
-  pkill xcape
-  xcape -e 'Caps_Lock=Escape'
-fi
-
-# Set widescreen
-if ! xrandr | grep -q  2560x1080R; then
-  xrandr --newmode "2560x1080R"  181.25  2560 2608 2640 2720  1080 1083 1093 1111 +hsync -vsync
-  xrandr --addmode HDMI-1 2560x1080R
-fi
-
-# Add fonts from HOME directory
-#xset +fp $HOME/.fonts
-#xset fp rehash
-
-export GOPATH=$HOME
-export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
-
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# keyboard layout
-setxkbmap -layout "us,hu"

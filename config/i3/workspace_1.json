@@ -8,11 +8,12 @@
        "x": 0,
        "y": 0
     },
-    "name": "Vivaldi Web Browser",
+    "name": "qutebrowser",
     "percent": 0.7,
     "swallows": [
        {
-        "class": "^Vivaldi\\-stable$"
+        "class": "^qutebrowser$",
+        "instance": "^qutebrowser$"
        }
     ],
     "type": "con"
@@ -28,12 +29,12 @@
        "x": 0,
        "y": 0
     },
-    "name": "Terminal",
+    "name": "urxvt",
     "percent": 0.3,
     "swallows": [
        {
-        "class": "^Alacritty$",
-        "instance": "^Alacritty$"
+        "class": "^URxvt$",
+        "instance": "^urxvt$"
        }
     ],
     "type": "con"

@@ -24,9 +24,9 @@
 *color15: #ffffff
 
 ! Window background color, opaqueness percentage enclosed in brackets
-URxvt.background: [80]#000000
+*background: [70]#000000
 ! Window foreground color
-URxvt.foreground: #ffffff
+*foreground: #ffffff
 ! The cursor color
 URxvt.cursorColor: #e5e5e5
 ! Fonts to be used
@@ -50,3 +50,7 @@ URxvt.perl-ext-common: keyboard-select,resize-font
 ! Keybindings
 URxvt.keysym.M-Escape: perl:keyboard-select:activate
 URxvt.keyboard-select.clipboard: true
+
+URxvt.visualBell: true
+!URxvt.internalBorder: 0
+!URxvt.externalBorder: 0
