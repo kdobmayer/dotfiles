@@ -48,7 +48,7 @@ font-5 = "Font Awesome 5 Brands:pixelsize=10;1"
 
 modules-left = i3
 modules-center = 
-modules-right = volume xkeyboard date
+modules-right = memory volume xkeyboard date
 
 tray-position = right
 tray-padding = 2

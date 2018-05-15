@@ -1,7 +1,7 @@
 # i3 config file (v4)
 
 # mod key
-set $mod Mod1
+set $mod Mod4
 
 # font
 font pango:hack 11
@@ -118,7 +118,7 @@ bindsym $mod+Shift+parenright move container to workspace $workspace10
 # automatically put windows on specific workspaces
 assign [class="qutebrowser"] → $workspace1
 assign [class="Slack"]  → $workspace8
-assign [class="skypeforlinux"]  → $workspace9
+assign [class="skype"]  → $workspace9
 
 # switch to next or previous workspace
 bindsym $mod+Tab workspace next

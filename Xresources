@@ -24,9 +24,9 @@
 *color15: #ffffff
 
 ! Window background color, opaqueness percentage enclosed in brackets
-*background: [70]#000000
+URxvt.background: [50]#000000
 ! Window foreground color
-*foreground: #ffffff
+URxvt.foreground: #ffffff
 ! The cursor color
 URxvt.cursorColor: #e5e5e5
 ! Fonts to be used
@@ -41,7 +41,7 @@ URxvt.letterSpace: -1
 ! Find a visual with the given bit depth (for transparency)
 URxvt.depth: 32
 ! Fade the text by the given percentage when focus is lost
-URxvt.fading: 30
+!URxvt.fading: 30
 ! Save <number> lines in the scrollback buffer
 URxvt.saveLines: 8192
 ! Perl extensions
@@ -51,6 +51,6 @@ URxvt.perl-ext-common: keyboard-select,resize-font
 URxvt.keysym.M-Escape: perl:keyboard-select:activate
 URxvt.keyboard-select.clipboard: true
 
-URxvt.visualBell: true
+URxvt.visualBell: false
 !URxvt.internalBorder: 0
 !URxvt.externalBorder: 0

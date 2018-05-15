@@ -11,6 +11,8 @@ go-tools
 gvim
 htop
 i3
+jq
+nfs-utils
 openssh
 polkit
 python
@@ -18,7 +20,10 @@ qutebrowser
 rofi
 rxvt-unicode
 rxvt-unicode-terminfo
+texlive-most
+translate-shell
 transmission-remote-gtk
+tree
 ttf-font-awesome
 ttf-hack
 xcape
@@ -26,6 +31,8 @@ xf86-video-intel
 xorg
 xorg-xinit
 youtube-dl
+zathura
+zathura-pdf-poppler
 zsh
 
 Aur packages:
