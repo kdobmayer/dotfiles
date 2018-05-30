@@ -15,6 +15,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'tpope/vim-vinegar'
+Plug 'hashivim/vim-terraform'
 
 call plug#end()
 
@@ -231,6 +232,7 @@ set colorcolumn=80              " highlight column
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
+let g:go_metalinter_enabled = ['vet', 'golint']
 let g:go_metalinter_autosave = 0
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_deadline = "5s"
@@ -276,6 +278,12 @@ augroup go
   autocmd!
   autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=8 shiftwidth=8
 augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-terraform
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:terraform_fmt_on_save = 1
+let g:terraform_align=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline

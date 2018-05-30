@@ -8,9 +8,11 @@ feh
 git
 go
 go-tools
+graphviz
 gvim
 htop
 i3
+imagemagick
 jq
 nfs-utils
 openssh

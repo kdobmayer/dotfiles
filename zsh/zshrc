@@ -6,6 +6,9 @@ if [[ -a ~/.localrc ]]; then
     source ~/.localrc
 fi
 
+# Turn off bell
+xset b off
+
 # Set widescreen
 if ! xrandr | grep -q  2560x1080; then
   xrandr \
@@ -23,6 +26,7 @@ fi
 # Map caps lock to Control
 if which setxkbmap &> /dev/null; then
   setxkbmap -option 'caps:ctrl_modifier'
+  setxkbmap -layout 'us,hu'
 fi
 
 # Map caps lock to Escape
@@ -116,12 +120,14 @@ alias gd='go doc'
 alias github='cd $GOPATH/src/github.com'
 alias depup='dep ensure -v && dep ensure -v -update'
 
-alias music='youtube-dl --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" --exec "scp {} raspi:/mnt/myhdd/music/youtube/ && rm {}"'
+alias music='youtube-dl --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" --exec "scp {} raspi:/mnt/juggernaut/music/ && rm {}"'
 alias addpkg='vi ~/src/github.com/kdobmayer/dotfiles/packages.txt'
 
 # Temp
 alias talicska='sudo mount raspi:/mnt/myhdd /mnt/talicska'
 alias juggernaut='sudo mount raspi:/mnt/juggernaut /mnt/juggernaut'
+alias devops='cd ${HOME}/src/github.com/kdobmayer/devops'
+#alias packer='packer-io'
 
 # environment variables
 export GOPATH=$HOME
@@ -129,6 +135,9 @@ export PATH="$PATH:$GOPATH/bin"
 export PACKER_CACHE_DIR=$HOME/.packer.d/cache
 #export VAGRANT_DEFAULT_PROVIDER='libvirt'
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+# make SSL to work in qutebrowser
+export LD_LIBRARY_PATH=/usr/lib/openssl-1.0
 
 #
 # Functions
@@ -163,3 +172,6 @@ git_branch() {
     echo "%F{123} $(git branch | awk '/\*/ {print $2}')%f"
   fi
 }
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform
