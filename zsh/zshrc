@@ -127,6 +127,7 @@ alias addpkg='vi ~/src/github.com/kdobmayer/dotfiles/packages.txt'
 alias talicska='sudo mount raspi:/mnt/myhdd /mnt/talicska'
 alias juggernaut='sudo mount raspi:/mnt/juggernaut /mnt/juggernaut'
 alias devops='cd ${HOME}/src/github.com/kdobmayer/devops'
+alias nettest='ping -c 4 8.8.8.8'
 #alias packer='packer-io'
 
 # environment variables

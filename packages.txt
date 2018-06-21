@@ -5,6 +5,7 @@ compton
 dmenu
 exa
 feh
+fuseiso
 git
 go
 go-tools
