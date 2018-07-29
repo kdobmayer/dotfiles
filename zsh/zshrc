@@ -107,20 +107,14 @@ alias tmux.conf="$EDITOR ~/.tmux.conf"
 alias vimrc="$EDITOR ~/.vimrc"
 alias i3config="$EDITOR ~/.config/i3/config"
 
-# dnf
-#alias dnfp='dnf provides'
-#alias dnfli='dnf list --installed'
-#alias dnfla='dnf list --available'
-#alias dnfu='sudo dnf upgrade'
-#alias dnfi='sudo dnf install'
-
 # go
 alias gorun='tput clear; go run main.go'
 alias gd='go doc'
 alias github='cd $GOPATH/src/github.com'
 alias depup='dep ensure -v && dep ensure -v -update'
 
-alias music='youtube-dl --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" --exec "scp {} raspi:/mnt/juggernaut/music/ && rm {}"'
+alias music='youtube-dl --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
+alias music-remote='youtube-dl --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" --exec "scp {} raspi:/mnt/juggernaut/music/ && rm {}"'
 alias addpkg='vi ~/src/github.com/kdobmayer/dotfiles/packages.txt'
 
 # Temp
@@ -129,6 +123,9 @@ alias juggernaut='sudo mount raspi:/mnt/juggernaut /mnt/juggernaut'
 alias devops='cd ${HOME}/src/github.com/kdobmayer/devops'
 alias nettest='ping -c 4 8.8.8.8'
 #alias packer='packer-io'
+alias kubect='kubectl'
+# Yaml to JSON, usage: yaml2js < in.yaml > out.json
+alias yaml2js="python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=2)'"
 
 # environment variables
 export GOPATH=$HOME
@@ -139,6 +136,7 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # make SSL to work in qutebrowser
 export LD_LIBRARY_PATH=/usr/lib/openssl-1.0
+export TF_CLI_ARGS_apply="-auto-approve"
 
 #
 # Functions
@@ -174,5 +172,27 @@ git_branch() {
   fi
 }
 
+kubens() {
+  kubectl config set-context $(kubectl config current-context) --namespace="$1"
+}
+
+newsh() {
+  echo "#!/usr/bin/env bash\n\n" > $1.sh
+  chmod u+x $1.sh
+  vi "+normal G" +startinsert $1.sh
+}
+
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
+
+# The next line updates PATH for the Google Cloud SDK.
+if [[ -a ~/opt/google-cloud-sdk/path.zsh.inc ]]; then
+  source ~/opt/google-cloud-sdk/path.zsh.inc
+fi
+
+# The next line enables shell command completion for gcloud.
+if [[ -a ~/opt/google-cloud-sdk/completion.zsh.inc ]]; then
+  source ~/opt/google-cloud-sdk/completion.zsh.inc
+fi
+
+
