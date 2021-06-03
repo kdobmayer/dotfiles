@@ -55,7 +55,7 @@ HIST_STAMPS="yyyy-mm-dd"
 DISABLE_AUTO_TITLE="true"
 
 # Enable zsh plugins
-plugins=(colored-man-pages docker extract git history sudo zsh_reload)
+plugins=(colored-man-pages docker extract git history kubectl sudo tmux zsh_reload)
 source $ZSH/oh-my-zsh.sh
 
 # completions automatically find new executables in the path
