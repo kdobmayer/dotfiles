@@ -6,34 +6,6 @@ if [[ -a ~/.localrc ]]; then
     source ~/.localrc
 fi
 
-# Turn off bell
-xset b off
-
-# Set widescreen
-if ! xrandr | grep -q  2560x1080; then
-  xrandr \
-    --newmode "2560x1080"  181.25  2560 2608 2640 2720  1080 1083 1093 1111 \
-    +hsync -vsync
-  xrandr --addmode HDMI1 2560x1080
-  xrandr \
-    --output VGA1 --off \
-    --output HDMI1 --primary --mode 2560x1080 --pos 0x0 --rotate normal \
-    --output HDMI2 --off \
-    --output DP2 --off \
-    --output DP1 --off
-fi
-
-# Map caps lock to Control
-if which setxkbmap &> /dev/null; then
-  setxkbmap -option 'caps:ctrl_modifier'
-  setxkbmap -layout 'us,hu'
-fi
-
-# Map caps lock to Escape
-if ! pgrep -c xcape &> /dev/null; then
-  xcape -e 'Caps_Lock=Escape'
-fi
-
 # overload system default 256-color palette with precise gruvbox colors
 source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
 
@@ -55,7 +27,7 @@ HIST_STAMPS="yyyy-mm-dd"
 DISABLE_AUTO_TITLE="true"
 
 # Enable zsh plugins
-plugins=(colored-man-pages docker extract git history kubectl sudo tmux zsh_reload)
+plugins=(colored-man-pages docker extract git history kubectl sudo tmux terraform)
 source $ZSH/oh-my-zsh.sh
 
 # completions automatically find new executables in the path
@@ -95,7 +67,7 @@ fi
 
 # system
 alias vi='vim'
-alias la='exa -abghl --git --color=automatic'
+alias la='eza -abghl --git --color=automatic'
 alias o='xdg-open'
 alias -g M="| more"
 alias hu='setxkbmap hu'
@@ -110,7 +82,7 @@ alias i3config="$EDITOR ~/.config/i3/config"
 # go
 alias gorun='tput clear; go run main.go'
 alias gd='go doc'
-alias github='cd $GOPATH/src/github.com'
+# alias github='cd $GOPATH/src/github.com'
 alias depup='dep ensure -v && dep ensure -v -update'
 
 alias music='youtube-dl --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
@@ -118,9 +90,6 @@ alias music-remote='youtube-dl --extract-audio --audio-format mp3 -o "%(title)s.
 alias addpkg='vi ~/src/github.com/kdobmayer/dotfiles/packages.txt'
 
 # Temp
-alias talicska='sudo mount raspi:/mnt/myhdd /mnt/talicska'
-alias juggernaut='sudo mount raspi:/mnt/juggernaut /mnt/juggernaut'
-alias devops='cd ${HOME}/src/github.com/kdobmayer/devops'
 alias nettest='ping -c 4 8.8.8.8'
 #alias packer='packer-io'
 alias kubect='kubectl'
@@ -128,15 +97,15 @@ alias kubect='kubectl'
 alias yaml2js="python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=2)'"
 
 # environment variables
-export GOPATH=$HOME
-export PATH="$PATH:$GOPATH/bin"
+# export GOPATH=$HOME
+# export PATH="$PATH:$GOPATH/bin"
 export PACKER_CACHE_DIR=$HOME/.packer.d/cache
-#export VAGRANT_DEFAULT_PROVIDER='libvirt'
+export VAGRANT_DEFAULT_PROVIDER='libvirt'
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # make SSL to work in qutebrowser
 export LD_LIBRARY_PATH=/usr/lib/openssl-1.0
-export TF_CLI_ARGS_apply="-auto-approve"
+# export TF_CLI_ARGS_apply="-auto-approve"
 
 #
 # Functions
@@ -195,4 +164,13 @@ if [[ -a ~/opt/google-cloud-sdk/completion.zsh.inc ]]; then
   source ~/opt/google-cloud-sdk/completion.zsh.inc
 fi
 
+# add Pulumi to the PATH
+export PATH=$PATH:/home/kdobmayer/.pulumi/bin
+HYPRSHOT_DIR=$HOME/pictures
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Created by `pipx` on 2025-05-21 16:33:46
+export PATH="$PATH:/home/kdobmayer/.local/bin"

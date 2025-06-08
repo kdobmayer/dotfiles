@@ -16,6 +16,8 @@ Plug 'SirVer/ultisnips'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'tpope/vim-vinegar'
 Plug 'hashivim/vim-terraform'
+Plug 'cappyzawa/starlark.vim'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 
 call plug#end()
 
@@ -139,7 +141,10 @@ map <silent> <leader><cr> :nohlsearch<cr>
 map <leader>ba :bufdo bd<cr>
 
 map <leader>n :bnext<cr>
-map <leader>p :bprevious<cr>
+" map <leader>p :bprevious<cr>
+let g:prettier#autoformat = 0
+let g:prettier#autoformat_require_pragma = 0
+" let g:prettier#quickfix_enabled = 0
 
 " create, close, move tabs
 map <leader>tn :tabnew<cr>
@@ -197,7 +202,7 @@ set t_Co=256
 
 syntax enable                   " switch on syntax highlighting
 "let base16colorspace=256
-let g:gruvbox_italic=1
+let g:gruvbox_italic=0
 colorscheme gruvbox
 "colorscheme base16-gruvbox-dark-medium
 " let g:gruvbox_contrast_dark='soft'
@@ -276,7 +281,7 @@ let g:go_highlight_function_calls = 1
 
 augroup go
   autocmd!
-  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=8 shiftwidth=8
+  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
